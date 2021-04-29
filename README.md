@@ -69,7 +69,7 @@ Every spring has a same spring constant, and its force is linear to displacement
 
 ![figure: successful implementation of ex2](imgs/ex2.gif)
 
-*Figure 4: The simulation is blowing up!*
+*Figure 4: The simulation is blown up!*
 
 ### Ex.3 Stable Simulation (baseline - 20%)
 
