@@ -81,7 +81,7 @@ Once you are done, again try to change the timestep *dt* and see what happens (t
 
 ### Ex.4 Impulse-based Collisions (advanced - 20%)
 
-Well, it looks good already, but you may not be very happy from the fact that the rigid body objects go through the ground (or each other). Well, we can give a slightly more effort to simulate collisions between objects. For simplicity, let's simulate collisions between (rigid bodies~ground) only. So we will neglect collisions between (rigid body~rigid body). 
+Well, it looks good already, but you may not be very happy from the fact that the rigid body objects go through the ground (or each other). Well, we can give a slightly more effort to simulate collisions between objects. For simplicity, let's simulate collisions between a rigid body-ground only. So we will neglect collisions between rigid body-rigid body. 
 
 Read the material, [ImpulseBasedCollisions](http://crl.ethz.ch/teaching/computational-motion-21/slides/ImpulseBasedCollisions.pdf) from our course website, see the comments in ```src/libs/sim/include/sim/RBPhysicsEngine.h```, and implement impulse-based collision simulation logic for **frictional and restitutional** contact.
 
