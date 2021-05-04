@@ -17,8 +17,8 @@ Quaternion updateRotationGivenAngularVelocity(const Quaternion &q,
         // TODO: Ex.1 Integration
         // implement quaternion update logic
         // q_p = rot(w, dt) * q
-        
-        // TODO: fix the following line. 
+
+        // TODO: fix the following line.
         return q;
     }
     return q;
@@ -50,27 +50,29 @@ public:
         rbs.push_back(new RB());
         // we use default mass = 100 kg
         rbs.back()->rbProps.mass = 100;
+        rbs.back()->rbProps.collision = false;
         rbs.back()->rbProps.id = rbs.size() - 1;
         // add force and torque
         f_ext.push_back(V3D());
         tau_ext.push_back(V3D());
-        // add contact points (at vertices)
-        rbs.back()->rbProps.contactPoints.push_back({P3D(0.125, 0.125, 0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(0.125, 0.125, -0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(0.125, -0.125, 0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(0.125, -0.125, -0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(-0.125, 0.125, 0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(-0.125, 0.125, -0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(-0.125, -0.125, 0.125)});
-        rbs.back()->rbProps.contactPoints.push_back(
-            {P3D(-0.125, -0.125, -0.125)});
+        return rbs.back();
+    }
 
+    /**
+     * add rigid body with collision to simulation world.
+     * note that we assume this is a sphere with radius = 0.1. 
+     */
+    RB *addCollidingRigidBodyToEngine() {
+        double i = 0.4 * 100 * 0.1 * 0.1;
+        rbs.push_back(new RB());
+        // we use default mass = 100 kg
+        rbs.back()->rbProps.mass = 100;
+        rbs.back()->rbProps.setMOI(i, i, i, 0, 0, 0);
+        rbs.back()->rbProps.collision = true;
+        rbs.back()->rbProps.id = rbs.size() - 1;
+        // add force and torque
+        f_ext.push_back(V3D());
+        tau_ext.push_back(V3D());
         return rbs.back();
     }
 
@@ -92,14 +94,14 @@ public:
         if (parent == nullptr) {
             // TODO: Ex.2-1
             // implement your logic for a spring which is attached to world
-            // 
+            //
             // TODO: Fix the following line
             springs.back()->l0 = 0;
         } else {
             // TODO: Ex.2-2
             // implement your logic for a spring where both ends are attached
             // to rigid bodies
-            // 
+            //
             // TODO: Fix the following line
             springs.back()->l0 = 0;
         }
@@ -187,7 +189,7 @@ public:
             // at once: choose the contact points which is the lowest in y coordinate.
 
             if (simulateCollisions) {
-                // 
+                //
                 // Ex.4 implementation here
                 //
             }
@@ -206,8 +208,12 @@ public:
     inline void draw(const gui::Shader &rbShader) {
         // draw moi boxes
         for (uint i = 0; i < this->rbs.size(); i++) {
-            if (!this->rbs[i]->rbProps.fixed)
-                crl::RBRenderer::drawMOI(this->rbs[i], rbShader);
+            if (!this->rbs[i]->rbProps.fixed) {
+                if (this->rbs[i]->rbProps.collision)
+                    crl::RBRenderer::drawCollisionRB(this->rbs[i], rbShader);
+                else
+                    crl::RBRenderer::drawMOI(this->rbs[i], rbShader);
+            }
         }
 
         // draw springs
@@ -225,11 +231,6 @@ public:
             }
             drawCylinder(start, end, 0.05, rbShader);
         }
-
-        // then draw collsion spheres
-        if (showCollisionSpheres)
-            for (uint i = 0; i < this->rbs.size(); i++)
-                crl::RBRenderer::drawCollisionSpheres(this->rbs[i], rbShader);
 
         // and now coordinate frames
         if (showCoordFrame) {
@@ -269,8 +270,7 @@ public:
     float mu = 0.8;   // friction
 
     // drawing flags
-    bool showCollisionSpheres = false;
-    bool showCoordFrame = false;
+    bool showCoordFrame = true;
 
     // options
     bool simulateCollisions = false;
