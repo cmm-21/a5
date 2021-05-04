@@ -89,11 +89,15 @@ Read the material, [ImpulseBasedCollisions](http://crl.ethz.ch/teaching/computat
 - the radius of the sphere is 0.1 m
 - friction is infinite
 
-Once you finish your implementation, run ```rigidbodies``` app, and select **Collisions** from simulation scene dropdown menu. You may see somewhat like these
+Once you finish your implementation, run ```rigidbodies``` app, and select **Collisions** from simulation scene dropdown menu. You may see somewhat like this:
+
+![figure: successful implementation of ex4](imgs/ex4.gif)
+
+*Figure 5: restitutional collision simulations*
 
 You might notice that the behaviors of the collisions are a bit unrealistic (can you explain why it's unrealistic, and why it happens? Please feel free to discuss with your colleagues). In fact, contact/collision simulation is not straight-forward and it is still an actively studied research topic. Today, we will just use a very simple model that can give you some idea of how a rigid body simulation pipeline works. **Try to reproduce the demo above,** and **record a demo video ~ 15 secs (~5 secs for each parameter sets) that shows all rigid body collisions with the following pairs of parameters (with dt = 1/30):**
 - epsilon = 0
-- epsilon = 0.5
+- epsilon = 0.5 (not necessarily to be exactly 0.5. Just use some value between 0 and 1.)
 - epsilon = 1
 
 **Upload it to this repository with a name "demo2.mp4".** Do a double check if your video can be played without any additional encoding/decoding. It's also fine to upload your video to YouTube and add its link to on the top of this README.md. If I cannot play or access your video until the deadline, you won't get full points. 
