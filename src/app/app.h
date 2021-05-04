@@ -263,7 +263,6 @@ public:
         ImGui::Text("Simulation Settings:");
         if (physicsEngine->simulateCollisions) {
             ImGui::SliderFloat("epsilon", &physicsEngine->eps, 0.0, 1.0);
-            ImGui::SliderFloat("mu", &physicsEngine->mu, 0.0, 2.0);
         }
 
         if (ImGui::TreeNode("Draw options...")) {

@@ -173,22 +173,37 @@ public:
             //
             // comment out (do not erase!) your logic for Ex.1 and implement Ex.3 here.
 
-            // TODO: Ex.4 Impulse-based Collisions
-            // we will simulate collisions between rigidbodies and the ground plane.
-            // implement impulse-based collisions here. use coefficient of
-            // restituation "epsilon" and coefficient of friction "mu".
-            // note that we ignore collisions between rigidbodies.
-            //
-            // Hint:
-            // - read the material "ImpulseBasedCollisions" on CMM21 website carefully.
-            // - detect collision by checking if the y coordinate of predefined
-            // contact points < 0 (under the ground) or not. each rb has 8 contact points.
-            // we will assume that collisions only happen at the contact points.
-            // - there could be multiple contact points under the ground at the sametime,
-            // but we will assume there's only one contact between a single ground~rb pair
-            // at once: choose the contact points which is the lowest in y coordinate.
+            if (simulateCollisions && rb->rbProps.collision) {
+                // TODO: Ex.4 Impulse-based Collisions
+                // we will simulate collisions between a spherical rigidbody and
+                // the ground plane. implement impulse-based collisions here. use
+                // coefficient of restituation "epsilon". (it's a member variable 
+                // of this class). we assume the friction is infinite.
+                // note that we ignore collisions between rigidbodies.
+                //
+                // Steps:
+                // 0. read the material "ImpulseBasedCollisions" on CMM21 website
+                // carefully.
+                // 1. update linear and angular velocity (not pose yet!!) of the 
+                // rigidbody by external force and torque before this if statement 
+                // block
+                // 2. if rb->rbProps.collision == true, we will assume this rb is
+                // a spherical object, and collide with the ground. (if not, 
+                // it's a cube and it does not collide with any other objects.)
+                // 3. compute impulse
+                // 4. update linear and angular velocity with impulse
+                // 5. now update pose of the rigid body (by integrating velocity)
+                //
+                // Hint:
+                // - the radius of the sphere is 0.1 m
+                // - detect collision if 1) the y coordinate of the point at the
+                // bottom of the sphere < 0 and 2) the y component of linear
+                // velocity of the point at the botton < 0.
+                // - we will assume that a collision only happens at the bottom
+                // points.
+                // - we will assume there's only one contact between a sphere
+                // and the ground
 
-            if (simulateCollisions) {
                 //
                 // Ex.4 implementation here
                 //
@@ -267,7 +282,6 @@ public:
 
     // coefficients
     float eps = 0.0;  // restitution
-    float mu = 0.8;   // friction
 
     // drawing flags
     bool showCoordFrame = true;
