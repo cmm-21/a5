@@ -341,8 +341,6 @@ private:
                 camera.rotAboutRightAxis = 0.25;
                 auto *rb = physicsEngine->addCollidingRigidBodyToEngine();
                 rb->state.pos = collisionP0;
-                rb->state.velocity = collisionV0;
-                // rb->state.angularVelocity = V3D(0, 10, 0);
                 break;
             }
             default:
@@ -378,9 +376,7 @@ public:
     // some constants
     const P3D projectileP0 = P3D(RBGlobals::g * 0.25, 0.5, 0);
     const V3D projectileV0 = V3D(-RBGlobals::g * 0.5, -RBGlobals::g * 0.5, 0);
-
-    const P3D collisionP0 = P3D(RBGlobals::g * 0.25, -RBGlobals::g * 0.15, 0);
-    const V3D collisionV0 = V3D(-RBGlobals::g * 0.5, 0, 0);
+    const P3D collisionP0 = P3D(0, -RBGlobals::g * 0.15, 0);
 
     // flags
     bool slowMo = false;
